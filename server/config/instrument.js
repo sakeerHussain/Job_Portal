@@ -1,4 +1,6 @@
-import { init, mongooseIntegration } from "@sentry/node";
+import * as Sentry from '@sentry/node'
+import { init } from "@sentry/node";
+
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 // Ensure to call this before requiring any other modules!
@@ -7,7 +9,7 @@ init({
   integrations: [
     // Add our Profiling integration
     nodeProfilingIntegration(),
-    mongooseIntegration()
+    Sentry.mongooseIntegration(),
   ],
 
   // Add Tracing by setting tracesSampleRate
