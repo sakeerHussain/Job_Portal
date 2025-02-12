@@ -1,22 +1,27 @@
-import * as Sentry from '@sentry/node'
-import { init } from "@sentry/node";
-
+// Import with `import * as Sentry from "@sentry/node"` if you are using ESM
+import * as Sentry from "@sentry/node"
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
-// Ensure to call this before requiring any other modules!
-init({
-  dsn: "https://e0234b528fc5a90846f2597835beaae6@o4508749337460736.ingest.de.sentry.io/4508749341851728",
+Sentry.init({
+  dsn: "https://137c0ea7289076488e683f1f01168660@o4508798609588224.ingest.us.sentry.io/4508798616731648",
   integrations: [
-    // Add our Profiling integration
     nodeProfilingIntegration(),
-    Sentry.mongooseIntegration(),
+    Sentry.mongoIntegration(),
   ],
-
-  // Add Tracing by setting tracesSampleRate
-  // We recommend adjusting this value in production
-  // tracesSampleRate: 1.0,
-
-  // Set sampling rate for profiling
-  // This is relative to tracesSampleRate
-  profilesSampleRate: 1.0,
+  // Tracing
+  // tracesSampleRate: 1.0, //  Capture 100% of the transactions
 });
+// Manually call startProfiler and stopProfiler
+// to profile the code in between
+Sentry.profiler.startProfiler();
+
+// Starts a transaction that will also be profiled
+Sentry.startSpan({
+  name: "My First Transaction",
+}, () => {
+  // the code executing inside the transaction will be wrapped in a span and profiled
+});
+
+// Calls to stopProfiling are optional - if you don't stop the profiler, it will keep profiling
+// your application until the process exits or stopProfiling is called.
+Sentry.profiler.stopProfiler();

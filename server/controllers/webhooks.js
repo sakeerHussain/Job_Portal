@@ -26,7 +26,7 @@ export const clerkWebhooks = async (req, res) => {
           name: data.first_name + " " + data.last_name,
           image: data.image_url,
           resume: "",
-        };
+        }
         await User.create(userData);
         res.json({});
         break;
@@ -48,6 +48,7 @@ export const clerkWebhooks = async (req, res) => {
         res.json({});
         break;
       }
+
       default:
         break;
     }

@@ -1,4 +1,3 @@
-import e from "express";
 import mongoose from "mongoose";
 
 // Function to connect to the MONGODB database
